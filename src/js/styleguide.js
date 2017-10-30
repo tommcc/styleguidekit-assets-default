@@ -372,7 +372,7 @@
 	//Update The viewport size
 	function updateViewportWidth(size) {
 		$(".pl-js-iframe").width(size);
-		$(".pl-js-vp-iframe-container").width(size * 1 + 14);
+		$(".pl-js-vp-iframe-container").width(size * 1 + viewportResizeHandleWidth);
 
 		updateSizeReading(size);
 	}
@@ -434,7 +434,7 @@
 	if (($(window).width() == testWidth) && ('ontouchstart' in document.documentElement) && ($(window).width() <= 1024)) {
 		$(".pl-js-resize-container").width(0);
 	} else {
-		$(".pl-js-iframe").width(origViewportWidth - 14);
+		$(".pl-js-iframe").width(origViewportWidth - viewportResizeHandleWidth);
 	}
 	updateSizeReading($(".pl-js-iframe").width());
 
