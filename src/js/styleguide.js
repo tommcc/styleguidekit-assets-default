@@ -27,6 +27,7 @@
 		}
 	
 		var viewportResizeHandleWidth = 14, //Width of the viewport drag-to-resize handle
+		$sgIframeContainer = $('.pl-js-vp-iframe-container'), //Outer container for viewport
 		$sgIframe = $('.pl-js-iframe'), //Viewport element
 		$sizePx = $('#pl-size-px'), //Px size input element in toolbar
 		$sizeEms = $('#pl-size-em'), //Em size input element in toolbar
@@ -315,7 +316,7 @@
 			"event": "patternLab.resize",
 			"resize": "true"
 		});
-		document.querySelector('.pl-js-iframe').contentWindow.postMessage(obj, targetOrigin);
+		$sgIframe.get(0).contentWindow.postMessage(obj, targetOrigin);
 
 		updateSizeReading(theSize); //Update values in toolbar
 		saveSize(theSize); //Save current viewport to cookie
@@ -327,7 +328,7 @@
 			"event": "patternLab.resize",
 			"resize": "true"
 		});
-		document.querySelector('.pl-js-iframe').contentWindow.postMessage(obj, targetOrigin);
+		$sgIframe.get(0).contentWindow.postMessage(obj, targetOrigin);
 	});
 
 	function saveSize(size) {
@@ -371,7 +372,7 @@
 
 	//Update The viewport size
 	function updateViewportWidth(size) {
-		$(".pl-js-iframe").width(size);
+		$sgIframe.width(size);
 		$(".pl-js-vp-iframe-container").width(size * 1 + 14);
 
 		updateSizeReading(size);
@@ -424,7 +425,7 @@
 
 
 	// capture the viewport width that was loaded and modify it so it fits with the pull bar
-	var origViewportWidth = $(".pl-js-iframe").width();
+	var origViewportWidth = $sgIframe.width();
 	$(".pl-js-vp-iframe-container").width(origViewportWidth);
 
 	var testWidth = screen.width;
@@ -434,9 +435,9 @@
 	if (($(window).width() == testWidth) && ('ontouchstart' in document.documentElement) && ($(window).width() <= 1024)) {
 		$(".pl-js-resize-container").width(0);
 	} else {
-		$(".pl-js-iframe").width(origViewportWidth - 14);
+		$sgIframe.width(origViewportWidth - 14);
 	}
-	updateSizeReading($(".pl-js-iframe").width());
+	updateSizeReading($sgIframe.width());
 
 	// get the request vars
 	var oGetVars = urlHandler.getRequestVars();
@@ -482,7 +483,7 @@
 	}
 
 	urlHandler.skipBack = true;
-	document.querySelector('.pl-js-iframe').contentWindow.location.replace(iFramePath);
+	$sgIframe.get(0).contentWindow.location.replace(iFramePath);
 
 	// Close all dropdowns and navigation
 	function closePanels() {
@@ -499,7 +500,7 @@
 			"event": "patternLab.updatePath",
 			"path": urlHandler.getFileName($(this).attr("data-patternpartial"))
 		});
-		document.querySelector('.pl-js-iframe').contentWindow.postMessage(obj, urlHandler.targetOrigin);
+		$sgIframe.get(0).contentWindow.postMessage(obj, urlHandler.targetOrigin);
 		closePanels();
 	});
 
@@ -514,7 +515,7 @@
 		window.addEventListener("orientationchange", function () {
 			if (window.orientation != origOrientation) {
 				$(".pl-js-vp-iframe-container").width($(window).width());
-				$(".pl-js-iframe").width($(window).width());
+				$sgIframe.width($(window).width());
 				updateSizeReading($(window).width());
 				origOrientation = window.orientation;
 			}
