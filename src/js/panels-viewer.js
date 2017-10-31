@@ -122,9 +122,6 @@ var panelsViewer = {
       patternData.patternDesc = "This pattern doesn't have a description.";
     }
 
-    // capitilize the pattern name
-    patternData.patternNameCaps = patternData.patternName.toUpperCase();
-
     // check for annotations in the given mark-up
     markup           = document.createElement('div');
     markup.innerHTML = patternData.patternMarkup;
